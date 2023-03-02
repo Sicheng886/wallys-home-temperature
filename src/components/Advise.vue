@@ -4,7 +4,8 @@
     <va-card-content>
       <p>{{ text }}</p>
       <p class="info">
-        以上建议由GPT提供，如有搪塞和胡言乱语请多包涵。每天6点，12点，18点更新。
+        以上建议由GPT
+        3.0提供，如有搪塞和胡言乱语请多包涵。每天6点，12点，18点更新。
       </p>
     </va-card-content>
   </va-card>
