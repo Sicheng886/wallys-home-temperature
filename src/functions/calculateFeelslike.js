@@ -5,7 +5,7 @@ const getHeatIndex = (tempair_in_fahrenheit, humidity) => {
       61 +
       (tempair_in_fahrenheit - 68) * 1.2 +
       humidity * 0.094)
-  if (hifinal < 79) {
+  if (hifinal <= 79) {
     return hifinal
   }
 
@@ -25,7 +25,7 @@ const getHeatIndex = (tempair_in_fahrenheit, humidity) => {
 
   if (
     humidity <= 13 &&
-    tempair_in_fahrenheit >= 80.0 &&
+    tempair_in_fahrenheit > 79 &&
     tempair_in_fahrenheit <= 112.0
   ) {
     const adj1 = (13.0 - humidity) / 4.0
@@ -38,7 +38,7 @@ const getHeatIndex = (tempair_in_fahrenheit, humidity) => {
 
   if (
     humidity > 85.0 &&
-    tempair_in_fahrenheit >= 80.0 &&
+    tempair_in_fahrenheit > 79 &&
     tempair_in_fahrenheit <= 87.0
   ) {
     var adj1 = (humidity - 85.0) / 10.0
@@ -46,6 +46,8 @@ const getHeatIndex = (tempair_in_fahrenheit, humidity) => {
     var adj = adj1 * adj2
     return heatIndex + adj
   }
+
+  return heatIndex
 }
 
 export default (temp, humidity) => {

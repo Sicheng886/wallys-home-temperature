@@ -2,10 +2,16 @@
   <va-card color="secondary" gradient>
     <va-card-title>每日建议</va-card-title>
     <va-card-content>
-      <p>{{ text }}</p>
+      <div>
+        <div v-for="item in advice" :key="item.type">
+          <p>{{ item.name }}: {{ item.category }}</p>
+
+          <p class="advice-text">{{ item.text }}</p>
+          <va-divider />
+        </div>
+      </div>
       <p class="info">
-        以上建议由GPT
-        3.0提供，如有搪塞和胡言乱语请多包涵。每天6点，12点，18点更新。
+        建议和天气数据均由和风天气提供。每天0点，6点，12点，18点更新建议。
       </p>
     </va-card-content>
   </va-card>
@@ -14,7 +20,7 @@
 <script setup>
 import { defineProps } from "vue"
 const props = defineProps({
-  text: String,
+  advice: Array,
 })
 </script>
 
@@ -31,5 +37,10 @@ p {
   font-size: 0.6rem;
   margin-top: 1.2rem;
   font-style: italic;
+}
+.advice-text {
+  font-size: 0.8rem;
+  line-height: 1.2rem;
+  margin-left: 1rem;
 }
 </style>

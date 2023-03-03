@@ -26,7 +26,7 @@ export default {
     const time = ref("2023-01-01 00:00")
     const nickName = ref("")
     const welcomeText = ref("")
-    const dailyAdvise = ref("请稍等...")
+    const dailyAdvise = ref([])
     const historyData = ref({})
 
     const minMax = computed(() => {
@@ -204,7 +204,7 @@ export default {
         </va-card>
       </div>
       <div class="card-row">
-        <advise :text="dailyAdvise" />
+        <advise :advice="dailyAdvise" />
       </div>
     </div>
 

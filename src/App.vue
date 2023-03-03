@@ -3,11 +3,10 @@
 <template>
   <router-view></router-view>
   <p class="foot-note">
-    本项目采用<a
-      rel="license"
-      href="http://creativecommons.org/licenses/by/4.0/"
-      >知识共享署名 4.0 国际许可协议</a
-    >进行许可 <br />
+    This work is licensed under a
+    <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"
+      >Creative Commons Attribution-ShareAlike 4.0 International License</a
+    >. <br />
     @Wally, 2023
   </p>
 </template>
