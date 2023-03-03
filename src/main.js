@@ -15,9 +15,17 @@ import {
   faArrowUpLong,
   faArrowDownLong,
   faRefresh,
+  faHouse,
 } from "@fortawesome/free-solid-svg-icons"
 /* add icons to the library */
-library.add(faTree, faMountainSun, faArrowUpLong, faArrowDownLong, faRefresh)
+library.add(
+  faTree,
+  faMountainSun,
+  faArrowUpLong,
+  faArrowDownLong,
+  faRefresh,
+  faHouse
+)
 import "qweather-icons/font/qweather-icons.css"
 import { createVuestic, VaButton, VaCard, VaInput, VaModal } from "vuestic-ui"
 import "vuestic-ui/styles/essential.css"

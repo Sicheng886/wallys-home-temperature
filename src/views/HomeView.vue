@@ -7,6 +7,7 @@ import Card from "../components/Card.vue"
 import DailyTrends from "../components/DailyTrends.vue"
 import DailyHumidity from "../components/DailyHumidity.vue"
 import Advise from "../components/Advise.vue"
+import DiffText from "../components/DiffText.vue"
 
 import calculateFeelsLike from "../functions/calculateFeelslike"
 export default {
@@ -16,6 +17,7 @@ export default {
     DailyTrends,
     DailyHumidity,
     Advise,
+    DiffText,
   },
   setup() {
     const weatherData = ref({})
@@ -28,6 +30,36 @@ export default {
     const welcomeText = ref("")
     const dailyAdvise = ref([])
     const historyData = ref({})
+    const periodData = ref({
+      temp: {
+        morning: {
+          value: 0,
+          diff: 0,
+        },
+        noon: {
+          value: 0,
+          diff: 0,
+        },
+        night: {
+          value: 0,
+          diff: 0,
+        },
+      },
+      humi: {
+        morning: {
+          value: 0,
+          diff: 0,
+        },
+        noon: {
+          value: 0,
+          diff: 0,
+        },
+        night: {
+          value: 0,
+          diff: 0,
+        },
+      },
+    })
 
     const minMax = computed(() => {
       const tempList = dailyForcast.value.map((item) => parseInt(item.temp))
@@ -72,6 +104,7 @@ export default {
         indoorData.value = sensor
         dailyAdvise.value = advise
         historyData.value = history
+        periodData.value = history.periodData
         time.value = dayjs(sensor.time * 1000).format("YYYY-MM-DD hh:mm")
       })
     }
@@ -93,6 +126,7 @@ export default {
       closeModalHandler,
       refreshHandler,
       historyData,
+      periodData,
     }
   },
   created() {
@@ -136,9 +170,37 @@ export default {
           <va-card stripe stripe-color="primary">
             <va-card-title>温度</va-card-title>
             <va-card-content>
-              <p>室内: {{ indoorData.temp.toFixed(2) }} °C</p>
+              <p>
+                <span
+                  class="icon-wrapper"
+                  :class="
+                    indoorData.temp > 28
+                      ? 'red'
+                      : indoorData.temp < 20
+                      ? 'blue'
+                      : 'good'
+                  "
+                >
+                  <font-awesome-icon icon="fa-solid fa-house" />
+                </span>
+                {{ indoorData.temp.toFixed(2) }} °C
+              </p>
               <va-divider />
-              <p>室外: {{ weatherData.temp }} °C</p>
+              <p>
+                <span
+                  class="icon-wrapper"
+                  :class="
+                    weatherData.temp > 28
+                      ? 'red'
+                      : weatherData.temp < 20
+                      ? 'blue'
+                      : 'good'
+                  "
+                >
+                  <font-awesome-icon icon="fa-solid fa-mountain-sun" />
+                </span>
+                {{ weatherData.temp }} °C
+              </p>
             </va-card-content>
           </va-card>
         </div>
@@ -146,9 +208,37 @@ export default {
           <va-card stripe stripe-color="primary">
             <va-card-title>湿度</va-card-title>
             <va-card-content>
-              <p>室内: {{ indoorData.humi.toFixed(2) }} %</p>
+              <p>
+                <span
+                  class="icon-wrapper"
+                  :class="
+                    indoorData.humi > 60
+                      ? 'red'
+                      : indoorData.humi < 40
+                      ? 'blue'
+                      : 'good'
+                  "
+                >
+                  <font-awesome-icon icon="fa-solid fa-house" />
+                </span>
+                {{ indoorData.humi.toFixed(2) }} %
+              </p>
               <va-divider />
-              <p>室外: {{ weatherData.humidity }} %</p>
+              <p>
+                <span
+                  class="icon-wrapper"
+                  :class="
+                    weatherData.humidity > 60
+                      ? 'red'
+                      : weatherData.humidity < 40
+                      ? 'blue'
+                      : 'good'
+                  "
+                >
+                  <font-awesome-icon icon="fa-solid fa-mountain-sun" />
+                </span>
+                {{ weatherData.humidity }} %
+              </p>
             </va-card-content>
           </va-card>
         </div>
@@ -156,9 +246,37 @@ export default {
           <va-card stripe stripe-color="primary">
             <va-card-title>体感</va-card-title>
             <va-card-content>
-              <p>室内: {{ indoorFeelslike }} °C</p>
+              <p>
+                <span
+                  class="icon-wrapper"
+                  :class="
+                    indoorFeelslike > 28
+                      ? 'red'
+                      : indoorFeelslike < 20
+                      ? 'blue'
+                      : 'good'
+                  "
+                >
+                  <font-awesome-icon icon="fa-solid fa-house" />
+                </span>
+                {{ indoorFeelslike }} °C
+              </p>
               <va-divider />
-              <p>室外: {{ weatherData.feelsLike }}°C</p>
+              <p>
+                <span
+                  class="icon-wrapper"
+                  :class="
+                    weatherData.feelsLike > 28
+                      ? 'red'
+                      : weatherData.feelsLike < 20
+                      ? 'blue'
+                      : 'good'
+                  "
+                >
+                  <font-awesome-icon icon="fa-solid fa-mountain-sun" />
+                </span>
+                {{ weatherData.feelsLike }}°C
+              </p>
             </va-card-content>
           </va-card>
         </div>
@@ -168,18 +286,30 @@ export default {
           <va-card-title>对比前日气温</va-card-title>
           <va-card-content>
             <p>
-              早上: NA°C /
-              <font-awesome-icon icon="fa-solid fa-arrow-up-long" /> NA°C
+              早上:
+              <DiffText
+                :value="periodData.temp.morning.value"
+                :diff="periodData.temp.morning.diff"
+                unit="°C"
+              />
             </p>
             <va-divider />
             <p>
-              中午: NA°C /
-              <font-awesome-icon icon="fa-solid fa-arrow-up-long" /> NA°C
+              中午:
+              <DiffText
+                :value="periodData.temp.noon.value"
+                :diff="periodData.temp.noon.diff"
+                unit="°C"
+              />
             </p>
             <va-divider />
             <p>
-              晚间: NA°C /
-              <font-awesome-icon icon="fa-solid fa-arrow-down-long" /> NA°C
+              晚间:
+              <DiffText
+                :value="periodData.temp.night.value"
+                :diff="periodData.temp.night.diff"
+                unit="°C"
+              />
             </p>
           </va-card-content>
         </va-card>
@@ -187,18 +317,30 @@ export default {
           <va-card-title>对比前日湿度</va-card-title>
           <va-card-content>
             <p>
-              早上: NA% /
-              <font-awesome-icon icon="fa-solid fa-arrow-up-long" /> NA%
+              早上:
+              <DiffText
+                :value="periodData.humi.morning.value"
+                :diff="periodData.humi.morning.diff"
+                unit="%"
+              />
             </p>
             <va-divider />
             <p>
-              中午: NA% /
-              <font-awesome-icon icon="fa-solid fa-arrow-up-long" /> NA%
+              中午:
+              <DiffText
+                :value="periodData.humi.noon.value"
+                :diff="periodData.humi.noon.diff"
+                unit="%"
+              />
             </p>
             <va-divider />
             <p>
-              晚间: NA% /
-              <font-awesome-icon icon="fa-solid fa-arrow-down-long" /> NA%
+              晚上:
+              <DiffText
+                :value="periodData.humi.night.value"
+                :diff="periodData.humi.night.diff"
+                unit="%"
+              />
             </p>
           </va-card-content>
         </va-card>
@@ -256,6 +398,22 @@ export default {
 
 .card-row-3 > div {
   flex-grow: 1;
+}
+
+.icon-wrapper {
+  padding-right: 0.3rem;
+}
+
+.icon-wrapper.good {
+  color: var(--va-primary);
+}
+
+.icon-wrapper.red {
+  color: var(--va-warning);
+}
+
+.icon-wrapper.blue {
+  color: var(--va-info);
 }
 
 p {

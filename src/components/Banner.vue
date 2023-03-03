@@ -15,7 +15,7 @@
           {{ tempOutdoor }}°C /
           <font-awesome-icon
             icon="fa-solid fa-arrow-up-long"
-            v-if="tempDiffernce > 0"
+            v-if="tempDiffernce >= 0"
           />
           <font-awesome-icon icon="fa-solid fa-arrow-down-long" v-else />
           {{ Math.abs(tempDiffernce) }}
@@ -25,7 +25,7 @@
           {{ humidityOutdoor }} % /
           <font-awesome-icon
             icon="fa-solid fa-arrow-up-long"
-            v-if="humiDifference > 0"
+            v-if="humiDifference >= 0"
           />
           <font-awesome-icon icon="fa-solid fa-arrow-down-long" v-else />
           {{ Math.abs(humiDifference) }} %
