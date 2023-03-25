@@ -116,4 +116,15 @@ const option = computed(() => {
 .chart-wrapper-inner {
   width: 300vw;
 }
+
+@media only screen and (min-width: 800px) {
+  .chart-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  .chart-wrapper-inner {
+    width: 100%;
+  }
+}
 </style>

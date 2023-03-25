@@ -11,6 +11,8 @@ app.use(
     },
   })
 )
+app.use("/recipe", express.static(__dirname + "/../../auto-recipe/dist"))
+
 app.use(express.static(__dirname + "/../dist"))
 
 app.listen(8080, function (err) {

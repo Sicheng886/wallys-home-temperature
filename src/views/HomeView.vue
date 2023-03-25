@@ -105,7 +105,7 @@ export default {
         dailyAdvise.value = advise
         historyData.value = history
         periodData.value = history.periodData
-        time.value = dayjs(sensor.time * 1000).format("YYYY-MM-DD hh:mm")
+        time.value = dayjs(sensor.update * 1000).format("YYYY-MM-DD hh:mm")
       })
     }
 
@@ -384,7 +384,7 @@ export default {
   margin-left: 0;
 }
 
-.card-container > *:lastchild {
+.card-container > *:last-child {
   margin-right: 0;
 }
 
